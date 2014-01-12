@@ -18,7 +18,7 @@ function ResolveMsBuildPath()
 		$root = "$root\Framework"
 	}
 
-	$item = Get-ChildItem "v*" | Sort -Descending | Select -First 1
+	$item = Get-ChildItem "$root\v*" | Sort -Descending | Select -First 1
 	
 	return $item.FullName
 }

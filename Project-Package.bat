@@ -1,2 +1,2 @@
 cd Source
-powershell.exe -ExecutionPolicy Bypass -NoLogo -NonInteractive -NoProfile -WindowStyle Hidden -File ".\.build\Package.ps1"
+powershell.exe -ExecutionPolicy Bypass -NoLogo -NoProfile -File ".\.build\Package.ps1"
