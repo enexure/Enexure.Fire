@@ -1,31 +1,76 @@
-Enexure.Fire.Configuration
-==
+#Enexure.Fire
 
-Easily load configuration from any key value source.
+Fire is a library of useful helpers and extension methods.
 
-Declare your settings  
+##Conversion
 
- 
-    <appSettings>
-		<add key="AppName" value="Some Software" />
-		<add key="MaxRetries" value="10" />
-	</appSettings>
+###Conversion string.ToOrDefault&lt;T>()
 
-Create a class for type safe access  
+Convert string to T or Default
 
-	class Settings
-	{
-		public string AppName { get; set; }
-		public int MaxRetries { get; set; }
-	}
+	"1".ToOrDefault<int>() // Should().Be(1);
+    
+Even works will nullable types
 
-Load the settings, you can use any `Func<string, string>` as the source.
+	"".ToOrDefault<int?>() // Should().Be(new int?());
 
-Inflate an instance.
+###Conversion string.To&lt;T>()
 
-    var settings = Configuration.Inflate.Instance<Settings>(x => SettingsManager.AppSettings[x]);
+`To` will only work for properly formatted values
 
-Inflate a static class.
+	"1".To<int>() // Should().Be(1);
 
-	Configuration.Inflate.Static(typeof(Settings), x => values[x]);
+	"".To<int>() // Throws FormatException
 
+###Conversion string.ToHexString()
+
+	new byte[] {255, 0}.ToHexString().Should().Be("FF00");
+
+##Formatting
+
+###Conversion string.Capitalise()
+
+	"hello World".Capitalise() // Should().Be("Hello World");
+
+###Conversion string.FormatWith()
+
+	"{0}".FormatWith("abc") // Should().Be("abc");
+
+###Conversion string.FromPascelCase()
+
+	"CaseTestOne".FromPascelCase() // Should().Be("Case Test One");
+
+##Time
+
+###Conversion specificMonth.GetPlaceInMonth()
+
+Finds the {First | Second | Third | Last} {Day | Weekday | WeekendDay | Monday | Tuesday | etc...} in a given month.
+
+	dateTime.ToSpecificMonth().GetPlaceInMonth(Place.Last, Weekday.Friday)
+
+###Conversion dateTime.GetClosestWeekday()
+
+Gets the closest weekday from the given date.
+
+	dateTime.GetClosestWeekday()
+
+###Conversion dateTime.GetNextWeekday()
+
+Gets the next weekday from the given date.
+
+	dateTime.GetNextWeekday()
+
+
+##Database
+
+Manipulate connection strings
+
+	dynamic connection = new ConnectionString();
+	
+	connection.Server = "localhost";
+	connection.Database = "database";
+	connection["User Id"] = "Username";
+	connection.Password = "Password";
+	
+	var connString = ((ConnectionString)connection);
+	connString.ToString() // Should().Be("server=localhost;database=database;user id=Username;password=Password;");
