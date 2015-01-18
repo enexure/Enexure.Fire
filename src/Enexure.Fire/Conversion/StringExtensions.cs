@@ -61,7 +61,7 @@ namespace Enexure.Fire.Conversion
 
 				result = Convert(convertType, value);
 
-			} catch (Exception ex) {
+			} catch (Exception) {
 
 				if (!useDefault) {
 					throw;
