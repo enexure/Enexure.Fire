@@ -1,10 +1,46 @@
-#Enexure.Fire
+Enexure.Fire
+=================
+[![Build status](https://ci.appveyor.com/api/projects/status/yi1juam8rmgmj7mo/branch/master?svg=true)](https://ci.appveyor.com/project/Daniel45729/enexure-fire/branch/master)
 
 Fire is a library of useful helpers and extension methods.
 
-##Conversion
+> PM> Install-Package [Enexure.Fire](https://www.nuget.org/packages/Enexure.Fire/)
 
-###Conversion string.ToOrDefault&lt;T>()
+###Linq
+
+**enumerable.None()**
+ 
+Checks if there are no items in a sequence
+
+	enumerable.None() // Should().Be(true)
+
+**enumerable.Do()**
+
+Iterates over the elements in the enumerable.
+
+	enumerable.Do(x => x.Update())
+
+**enumerable.Done()**
+
+Iterates over the elements in the enumerable.
+
+	enumerable.Done()
+
+**enumerable.Prepend()**
+
+Creatres a new enumerable with the new element prepended.
+
+	enumerable.Prepend(element)
+
+**enumerable.Append()**
+
+Creatres a new enumerable with the new element appended.
+
+	enumerable.Append(element)
+
+###Conversion
+
+**string.ToOrDefault&lt;T>()**
 
 Convert string to T or Default
 
@@ -14,7 +50,7 @@ Even works will nullable types
 
 	"".ToOrDefault<int?>() // Should().Be(new int?());
 
-###Conversion string.To&lt;T>()
+**string.To&lt;T>()**
 
 `To` will only work for properly formatted values
 
@@ -22,55 +58,40 @@ Even works will nullable types
 
 	"".To<int>() // Throws FormatException
 
-###Conversion string.ToHexString()
+**string.ToHexString()**
 
 	new byte[] {255, 0}.ToHexString().Should().Be("FF00");
 
-##Formatting
+###Formatting
 
-###Conversion string.Capitalise()
+**string.Capitalise()**
 
 	"hello World".Capitalise() // Should().Be("Hello World");
 
-###Conversion string.FormatWith()
+**string.FormatWith()**
 
 	"{0}".FormatWith("abc") // Should().Be("abc");
 
-###Conversion string.FromPascelCase()
+**string.FromPascelCase()**
 
 	"CaseTestOne".FromPascelCase() // Should().Be("Case Test One");
 
-##Time
+###Time
 
-###Conversion specificMonth.GetPlaceInMonth()
+**specificMonth.GetPlaceInMonth()**
 
 Finds the {First | Second | Third | Last} {Day | Weekday | WeekendDay | Monday | Tuesday | etc...} in a given month.
 
 	dateTime.ToSpecificMonth().GetPlaceInMonth(Place.Last, Weekday.Friday)
 
-###Conversion dateTime.GetClosestWeekday()
+**dateTime.GetClosestWeekday()**
 
 Gets the closest weekday from the given date.
 
 	dateTime.GetClosestWeekday()
 
-###Conversion dateTime.GetNextWeekday()
+**dateTime.GetNextWeekday()**
 
 Gets the next weekday from the given date.
 
 	dateTime.GetNextWeekday()
-
-
-##Database
-
-Manipulate connection strings
-
-	dynamic connection = new ConnectionString();
-	
-	connection.Server = "localhost";
-	connection.Database = "database";
-	connection["User Id"] = "Username";
-	connection.Password = "Password";
-	
-	var connString = ((ConnectionString)connection);
-	connString.ToString() // Should().Be("server=localhost;database=database;user id=Username;password=Password;");
